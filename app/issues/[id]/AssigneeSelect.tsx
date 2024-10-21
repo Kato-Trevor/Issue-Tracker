@@ -19,7 +19,8 @@ const AssigneeSelect = ({ issue }: { issue: Issue }) => {
       .patch("/api/issues/" + issue.id, {
         assignedToUserId: userId || null,
       })
-      .catch(() => {
+      .catch((error) => {
+        console.log(error)
         toast.error("Changes could not be saved.");
       });
   };
@@ -33,7 +34,7 @@ const AssigneeSelect = ({ issue }: { issue: Issue }) => {
         <Select.Trigger placeholder="Assign..." />
         <Select.Content>
           <Select.Group>
-            <Select.Label>Suggestions</Select.Label>
+            <Select.Label>Select an Assignee</Select.Label>
             <Select.Item value="">Unassigned</Select.Item>
             {users?.map((user) => (
               <Select.Item key={user.id} value={user.id}>
