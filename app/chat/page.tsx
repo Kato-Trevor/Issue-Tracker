@@ -5,41 +5,23 @@ import axios from 'axios';
 
 export default function Home() {
   const [input, setInput] = useState('');
-  const [messages, setMessages] = useState([
-    {
-      role: 'system',
-      content: 'You are a helpful assistant.',
-    },
-  ]);
+  const [chatResponse, setChatResponse] = useState();
 
   const sendMessage = async () => {
-    const newMessage = {
-      role: 'user',
-      content: input,
-    };
-    setMessages((prevMessages) => [...prevMessages, newMessage]);
-
-    const response = await axios.post('/api/chat-GPT', {
-     messages: [...messages, newMessage],
+    const response = await axios.post('/api/groq', {
+      message: input,
     });
-
-    const assistantMessage = {
-      role: 'assistant',
-      content: response.data.message,
-    };
-    setMessages((prevMessages) => [...prevMessages, assistantMessage]);
+    setChatResponse(response.data)
     setInput('');
   };
 
   return (
     <div>
-      <h1>Chat with ChatGPT</h1>
+      <h1>Chat with our AI assitant</h1>
       <div>
-        {messages.map((message, index) => (
-          <p key={index} className={message.role}>
-            {message.content}
-          </p>
-        ))}
+        <p>
+          {chatResponse}
+        </p>
       </div>
       <input
         type="text"

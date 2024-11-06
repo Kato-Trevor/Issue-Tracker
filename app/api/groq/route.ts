@@ -4,7 +4,7 @@ import { z } from "zod";
 
 const groq = new Groq();
 
-export const chatRequestSchema = z.object({
+const chatRequestSchema = z.object({
   message: z.string(),
 });
 
